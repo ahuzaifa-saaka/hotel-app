@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {createPortal} from "react-dom";
 import {cloneElement, createContext, useContext, useRef, useState} from "react";
 import {useEffect} from "react";
+import {useOutsideClick} from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -58,7 +59,8 @@ function Modal({children}) {
   const [openName, setOpenName] = useState("");
 
   const close = () => setOpenName("");
-  const open = setOpenName;
+  const open = (name) => setOpenName(name);
+
   return (
     <ModalContext.Provider value={{openName, close, open}}>
       {children}
@@ -74,16 +76,16 @@ function Open({children, opens: opensWindowName}) {
 
 function Window({children, name}) {
   const {openName, close} = useContext(ModalContext);
-  const ref = useRef();
+  const ref = useOutsideClick();
 
-  useEffect(() => {
-    function handleClick(e) {
-      if (ref.current && !ref.current.contain(e.target)) close();
-    }
-    document.addEventListener("click", handleClick);
+  // useEffect(() => {
+  //   function handleClick(e) {
+  //     if (ref.current && !ref.current.contains(e.target)) close();
+  //   }
+  //   document.addEventListener("click", handleClick);
 
-    return () => document.removeEventListener("click", handleClick);
-  }, []);
+  //   return () => document.removeEventListener("click", handleClick);
+  // }, [close]);
 
   if (name !== openName) return null;
 

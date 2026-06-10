@@ -36,7 +36,7 @@ export function CreateCabinForm({cabinToEdit = {}, onCloseModal}) {
       );
     else
       createCabin(
-        {...data, image},
+        {...data, image: image},
         {
           onSuccess: (data) => {
             reset();
