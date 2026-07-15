@@ -18,7 +18,15 @@ function LoginForm() {
     if (!email || !password) return;
     login({ email, password });
 
-    // login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      },
+    );
   }
 
   return (
@@ -32,6 +40,7 @@ function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
+          placeholder="Enter email address"
         />
       </FormRowVertical>
       <FormRowVertical label="Password">
@@ -42,6 +51,7 @@ function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
+          placeholder="Password"
         />
       </FormRowVertical>
       <FormRowVertical>
