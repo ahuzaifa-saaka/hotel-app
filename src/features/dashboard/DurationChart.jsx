@@ -64,42 +64,42 @@ const startDataLight = [
 const startDataDark = [
   {
     duration: "1 night",
-    value: 0,
+    value: 5,
     color: "#b91c1c",
   },
   {
     duration: "2 nights",
-    value: 0,
+    value: 7,
     color: "#c2410c",
   },
   {
     duration: "3 nights",
-    value: 0,
+    value: 3,
     color: "#a16207",
   },
   {
     duration: "4-5 nights",
-    value: 0,
+    value: 2,
     color: "#4d7c0f",
   },
   {
     duration: "6-7 nights",
-    value: 0,
+    value: 9,
     color: "#15803d",
   },
   {
     duration: "8-14 nights",
-    value: 0,
+    value: 5,
     color: "#0f766e",
   },
   {
     duration: "15-21 nights",
-    value: 0,
+    value: 1,
     color: "#1d4ed8",
   },
   {
     duration: "21+ nights",
-    value: 0,
+    value: 9,
     color: "#7e22ce",
   },
 ];
@@ -132,7 +132,37 @@ function prepareData(startData, stays) {
 }
 
 import React from "react";
+import Heading from "../../ui/Heading";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-export default function DurationChart() {
-  return <div>DurationChart</div>;
+export default function DurationChart({ confirmedStays }) {
+  return (
+    <ChartBox>
+      <Heading as="h2">Stay Duration</Heading>
+
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={startDataLight}
+            nameKey="duration"
+            dataKey="value"
+            innerRadius={85}
+            outerRadius={110}
+            cx="40%"
+            cy="50%"
+            paddingAngle={3}
+          >
+            {startDataLight.map((entry) => (
+              <Cell
+                fill={entry.color}
+                stroke={entry.color}
+                strokeWidth={2}
+                key={entry.duration}
+              />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
 }

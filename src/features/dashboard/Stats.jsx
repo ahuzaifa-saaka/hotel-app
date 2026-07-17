@@ -9,18 +9,26 @@ import { formatCurrency } from "../../utils/helpers";
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
   // 1.
-  const numBookings = bookings?.length;
+  const numBookings = bookings.length;
+  console.log({ numBookings, bookings });
 
   // 2.
-  const sales = bookings?.reduce((acc, cur) => acc + cur.totalPrice, 0);
+  const sales = bookings.reduce(
+    (acc, cur) => acc + Number(cur.totalPrice ?? 0),
+    0,
+  );
 
   // 3.
-  const checkins = confirmedStays?.length;
+  const checkins = confirmedStays.length;
 
   // 4.
+  const occupiedNights = confirmedStays.reduce(
+    (acc, cur) => acc + Number(cur.numNights ?? 0),
+    0,
+  );
+
   const occupation =
-    confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
-    (numDays * cabinCount);
+    numDays && cabinCount ? occupiedNights / (numDays * cabinCount) : 0;
   // num checked in nights / all available nights (num days * num cabins)
 
   return (
