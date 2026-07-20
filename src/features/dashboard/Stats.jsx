@@ -9,21 +9,20 @@ import { formatCurrency } from "../../utils/helpers";
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
   // 1.
-  const numBookings = bookings.length;
-  console.log({ numBookings, bookings });
+  const numBookings = bookings?.length;
 
   // 2.
-  const sales = bookings.reduce(
+  const sales = bookings?.reduce(
     (acc, cur) => acc + Number(cur.totalPrice ?? 0),
     0,
   );
 
   // 3.
-  const checkins = confirmedStays.length;
+  const checkins = confirmedStays?.length;
 
   // 4.
-  const occupiedNights = confirmedStays.reduce(
-    (acc, cur) => acc + Number(cur.numNights ?? 0),
+  const occupiedNights = confirmedStays?.reduce(
+    (acc, cur) => acc + Number(cur.numNights ?? cur.numNight ?? 0),
     0,
   );
 

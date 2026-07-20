@@ -65,7 +65,7 @@ function BookingDetail() {
           </Button>
         )}
 
-        {Status === "checked-in" && (
+        {status === "checked-in" && (
           <Button
             disabled={isCheckingOut}
             icon={<HiArrowUpOnSquare />}

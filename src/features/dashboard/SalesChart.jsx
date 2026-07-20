@@ -75,7 +75,12 @@ export default function SalesChart({ bookings, numDays }) {
 
       extrasSales: bookings
         .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-        .reduce((acc, cur) => acc + cur.ExtrasPrice, 0),
+        .reduce(
+          (acc, cur) =>
+            acc +
+            Number(cur.extrasPrice ?? cur.ExtraPrice ?? cur.ExtrasPrice ?? 0),
+          0,
+        ),
     };
   });
 

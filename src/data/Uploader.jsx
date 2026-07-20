@@ -63,24 +63,24 @@ async function createBookings() {
       : 0; // hardcoded breakfast price
     const totalPrice = cabinPrice + extrasPrice;
 
-    let status;
-    if (
-      isPast(new Date(booking.endDate)) &&
-      !isToday(new Date(booking.endDate))
-    )
+    const startDate = new Date(booking.startDate);
+    const endDate = new Date(booking.endDate);
+
+    let status = "unconfirmed";
+    if (isPast(endDate) && !isToday(endDate)) {
       status = "checked-out";
-    if (
-      isFuture(new Date(booking.startDate)) ||
-      isToday(new Date(booking.startDate))
-    )
+    } else if (
+      (isFuture(startDate) || isToday(startDate)) &&
+      !isPast(endDate)
+    ) {
       status = "unconfirmed";
-    if (
-      (isFuture(new Date(booking.endDate)) ||
-        isToday(new Date(booking.endDate))) &&
-      isPast(new Date(booking.startDate)) &&
-      !isToday(new Date(booking.startDate))
-    )
+    } else if (
+      (isFuture(endDate) || isToday(endDate)) &&
+      isPast(startDate) &&
+      !isToday(startDate)
+    ) {
       status = "checked-in";
+    }
 
     return {
       ...booking,
@@ -90,7 +90,7 @@ async function createBookings() {
       totalPrice,
       guestId: allGuestIds.at(booking.guestId - 1),
       cabinId: allCabinIds.at(booking.cabinId - 1),
-      status,
+      Status: status,
     };
   });
 

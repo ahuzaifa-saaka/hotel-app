@@ -10,8 +10,6 @@ export async function getBookings({ filter, sortBy, page }) {
       { count: "exact" },
     );
 
-  console.log({ query });
-
   if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
 
   if (sortBy)
@@ -101,7 +99,7 @@ export async function getStaysTodayActivity() {
   // (stay.status === 'checked-in' && isToday(new Date(stay.endDate)))
 
   if (error) {
-    console.error(error);
+    // console.error(error);
     throw new Error("Bookings could not get loaded");
   }
   return data;

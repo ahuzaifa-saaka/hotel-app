@@ -103,21 +103,28 @@ const Footer = styled.footer`
 
 // A purely presentational component
 function BookingDataBox({ booking }) {
-  const {
-    created_at,
-    startDate,
-    endDate,
-    numNights,
-    numGuests,
-    cabinPrice,
-    extrasPrice,
-    totalPrice,
-    hasBreakfast,
-    observations,
-    isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabins: { name: cabinName },
-  } = booking;
+  const created_at = booking.created_at;
+  const startDate = booking.startDate;
+  const endDate = booking.endDate;
+  const numNights = booking.numNights ?? booking.numNight ?? 0;
+  const numGuests = booking.numGuests ?? booking.numGuest ?? 1;
+  const cabinPrice = booking.cabinPrice ?? 0;
+  const extrasPrice =
+    booking.extrasPrice ?? booking.ExtraPrice ?? booking.ExtrasPrice ?? 0;
+  const totalPrice = booking.totalPrice ?? 0;
+  const hasBreakfast = booking.hasBreakfast ?? false;
+  const observations = booking.observations ?? booking.observation ?? "";
+  const isPaid = booking.isPaid ?? false;
+
+  const guestObj = booking.guests ?? {};
+  const guestName = guestObj.fullName ?? "Unknown guest";
+  const email = guestObj.email ?? "—";
+  const country = guestObj.country ?? "";
+  const countryFlag = guestObj.countryFlag ?? null;
+  const nationalID = guestObj.nationalID ?? "";
+
+  const cabinObj = booking.cabins ?? {};
+  const cabinName = cabinObj.name ?? booking.cabinName ?? "Unknown cabin";
 
   return (
     <StyledBookingDataBox>
@@ -169,7 +176,7 @@ function BookingDataBox({ booking }) {
 
             {hasBreakfast &&
               ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
+                extrasPrice,
               )} breakfast)`}
           </DataItem>
 
