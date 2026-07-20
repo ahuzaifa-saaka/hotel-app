@@ -11,7 +11,7 @@ export function useCheckout() {
   const { mutate: Checkout, isPending: isCheckingOut } = useMutation({
     mutationFn: ({ bookingId }) =>
       updateBooking(bookingId, {
-        status: "checked-out",
+        Status: "checked-out",
       }),
 
     onSuccess: (data) => {

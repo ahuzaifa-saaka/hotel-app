@@ -3,8 +3,8 @@ import React from "react";
 import Button from "../../ui/Button";
 import Tag from "../../ui/Tag";
 import { Link } from "react-router-dom";
-import CheckInButton from "../../ui/CheckInButton";
-import Flag from "../../ui/Flag";
+// import CheckInButton from "../../ui/CheckInButton";
+import { Flag } from "../../ui/Flag";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -26,31 +26,26 @@ const Guest = styled.div`
 `;
 
 export default function TodayItem({ activity }) {
-  const { id, status, guests, numNights } = activity;
+  const { id, Status, status, guests, numNights, numNight } = activity;
+  const currentStatus = Status ?? status;
+  const nights = numNights ?? numNight ?? 0;
 
   return (
     <StyledTodayItem>
-      <>
-        {status === "unconfimred" && <Tag type="green">Arriving</Tag>}
+      {currentStatus === "unconfirmed" && <Tag type="green">Arriving</Tag>}
 
-        {status === "checked-in " && <Tag type="blue">Checked In</Tag>}
+      {currentStatus === "checked-in" && <Tag type="blue">Checked In</Tag>}
 
-        <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
+      <Flag src={guests?.countryFlag} alt={`Flag of ${guests?.country}`} />
 
-        <Guest>{guests.fullName}</Guest>
-        <div>{numNights} nights</div>
+      <Guest>{guests?.fullName ?? "Guest"}</Guest>
+      <div>{nights} nights</div>
 
-        {status === "checked-in " && (
-          <Button
-            size="small"
-            variant="primary"
-            as={Link}
-            as={`/checkin/${id}`}
-          >
-            Checked In
-          </Button>
-        )}
-      </>
+      {currentStatus === "checked-in" && (
+        <Button size="small" variant="primary" as={Link} to={`/checkin/${id}`}>
+          Checked In
+        </Button>
+      )}
     </StyledTodayItem>
   );
 }

@@ -52,10 +52,10 @@ function CheckinBooking() {
     numNight,
   } = booking;
 
-  console.log("Settings:", settings);
-  console.log("Breakfast Price:", settings.breakFastPrice);
-  console.log("numNights:", numNight);
-  console.log("numGuests:", numGuest);
+  // console.log("Settings:", settings);
+  // console.log("Breakfast Price:", settings.breakFastPrice);
+  // console.log("numNights:", numNight);
+  // console.log("numGuests:", numGuest);
 
   const optionalBreakfastPrice = settings.breakFastPrice * numNight * numGuest;
 
