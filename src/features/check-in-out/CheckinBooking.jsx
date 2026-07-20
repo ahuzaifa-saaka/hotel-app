@@ -43,21 +43,15 @@ function CheckinBooking() {
 
   if (isLoading || isLoadingSetting) return <Spinner />;
 
-  const {
-    id: bookingId,
-    guests,
-    totalPrice,
-    numGuest,
-    hasBreakfast,
-    numNight,
-  } = booking;
+  const bookingId = booking?.id;
+  const guests = booking?.guests ?? {};
+  const totalPrice = booking?.totalPrice ?? 0;
+  const numGuest = booking?.numGuest ?? booking?.numGuests ?? 1;
+  const numNight = booking?.numNight ?? booking?.numNights ?? 1;
+  const hasBreakfast = booking?.hasBreakfast ?? false;
 
-  // console.log("Settings:", settings);
-  // console.log("Breakfast Price:", settings.breakFastPrice);
-  // console.log("numNights:", numNight);
-  // console.log("numGuests:", numGuest);
-
-  const optionalBreakfastPrice = settings.breakFastPrice * numNight * numGuest;
+  const breakfastPrice = settings?.breakFastPrice ?? 0;
+  const optionalBreakfastPrice = breakfastPrice * numNight * numGuest;
 
   function handleCheckin() {
     if (!confirmPaid) return;

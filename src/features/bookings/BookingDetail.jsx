@@ -36,6 +36,8 @@ function BookingDetail() {
   const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
+  if (!booking) return <Empty resourceName="booking" />;
+
   if (error) return <Empty resourceName="booking" />;
 
   const { Status: status, id: bookingId } = booking;

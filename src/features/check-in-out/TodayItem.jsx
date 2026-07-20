@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import React from "react";
-import Button from "../../ui/Button";
-import Tag from "../../ui/Tag";
 import { Link } from "react-router-dom";
-// import CheckInButton from "../../ui/CheckInButton";
+
+import Tag from "../../ui/Tag";
 import { Flag } from "../../ui/Flag";
+import Button from "../../ui/Button";
+import CheckoutButton from "./CheckoutButton";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -25,27 +25,31 @@ const Guest = styled.div`
   font-weight: 500;
 `;
 
-export default function TodayItem({ activity }) {
-  const { id, Status, status, guests, numNights, numNight } = activity;
-  const currentStatus = Status ?? status;
-  const nights = numNights ?? numNight ?? 0;
+function TodayItem({ activity }) {
+  const { id, Status, guests, numNight } = activity;
 
   return (
     <StyledTodayItem>
-      {currentStatus === "unconfirmed" && <Tag type="green">Arriving</Tag>}
+      {Status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
+      {Status === "checked-in" && <Tag type="blue">Departing</Tag>}
 
-      {currentStatus === "checked-in" && <Tag type="blue">Checked In</Tag>}
+      <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
+      <Guest>{guests.fullName}</Guest>
+      <div>{numNight} nights</div>
 
-      <Flag src={guests?.countryFlag} alt={`Flag of ${guests?.country}`} />
-
-      <Guest>{guests?.fullName ?? "Guest"}</Guest>
-      <div>{nights} nights</div>
-
-      {currentStatus === "checked-in" && (
-        <Button size="small" variant="primary" as={Link} to={`/checkin/${id}`}>
-          Checked In
+      {Status === "unconfirmed" && (
+        <Button
+          size="small"
+          variation="primary"
+          as={Link}
+          to={`/checkin/${id}`}
+        >
+          Check in
         </Button>
       )}
+      {Status === "checked-in" && <CheckoutButton bookingId={id} />}
     </StyledTodayItem>
   );
 }
+
+export default TodayItem;
