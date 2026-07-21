@@ -13,6 +13,7 @@ export function useBookings() {
     !filterValue || filterValue === "all"
       ? null
       : { field: "Status", value: filterValue };
+  const search = searchParams.get("search") || "";
   // {field: "totalPrice", value: 5000, method: "gte"};
 
   // SORT
@@ -32,8 +33,8 @@ export function useBookings() {
     data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy, page],
-    queryFn: () => getBookings({ filter, sortBy, page }),
+    queryKey: ["bookings", filter, sortBy, page, search],
+    queryFn: () => getBookings({ filter, sortBy, page, search }),
   });
 
   // PRE-FETCHING

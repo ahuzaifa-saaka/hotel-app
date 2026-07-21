@@ -6,14 +6,25 @@ const StyledFilter = styled.div`
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-sm);
-  padding: 0.4rem;
   display: flex;
   gap: 0.4rem;
+  min-height: 4rem;
+  align-items: center;
+  padding: 0.2rem;
 `;
 
 const FilterButton = styled.button`
   background-color: var(--color-grey-0);
   border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 500;
+  font-size: 1.3rem;
+  min-height: 3.6rem;
+  padding: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
 
   ${(props) =>
     props.active &&
@@ -21,13 +32,6 @@ const FilterButton = styled.button`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
     `}
-
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  font-size: 1.4rem;
-  /* To give the same height as select */
-  padding: 0.44rem 0.8rem;
-  transition: all 0.3s;
 
   &:hover:not(:disabled) {
     background-color: var(--color-brand-600);

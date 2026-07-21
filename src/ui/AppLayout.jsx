@@ -23,7 +23,7 @@ const Main = styled.main`
   @media (max-width: 768px) {
     padding: 1.6rem;
     transform: ${(props) =>
-      props.sidebarOpen ? "translateX(26rem)" : "translateX(0)"};
+      props.$sidebarOpen ? "translateX(26rem)" : "translateX(0)"};
   }
 `;
 
@@ -48,7 +48,7 @@ function AppLayout() {
       <Header onToggle={() => setSidebarOpen((s) => !s)} />
       <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Main
-        sidebarOpen={isSidebarOpen}
+        $sidebarOpen={isSidebarOpen}
         onClick={() => isSidebarOpen && setSidebarOpen(false)}
       >
         <Container>

@@ -19,6 +19,7 @@ import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
+import BookingForm from "./BookingForm";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -61,14 +62,28 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
+        <Modal>
+          <Modal.Open opens="edit">
+            <Button variation="secondary">Edit booking</Button>
+          </Modal.Open>
+
+          <Modal.Window name="edit">
+            <BookingForm bookingToEdit={booking} />
+          </Modal.Window>
+        </Modal>
+
         {status === "unconfirmed" && (
-          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
+          <Button
+            variation="success"
+            onClick={() => navigate(`/checkin/${bookingId}`)}
+          >
             Check in
           </Button>
         )}
 
         {status === "checked-in" && (
           <Button
+            variation="primary"
             disabled={isCheckingOut}
             icon={<HiArrowUpOnSquare />}
             onClick={() => {
@@ -81,7 +96,7 @@ function BookingDetail() {
 
         <Modal>
           <Modal.Open opens="delete">
-            <Button variation="dander">Delete booking</Button>
+            <Button variation="danger">Delete booking</Button>
           </Modal.Open>
 
           <Modal.Window name="delete">

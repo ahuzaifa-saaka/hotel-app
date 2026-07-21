@@ -2,7 +2,7 @@ import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
-export async function getBookings({ filter, sortBy, page }) {
+export async function getBookings({ filter, sortBy, page, search }) {
   let query = supabase
     .from("bookings")
     .select(
@@ -11,6 +11,8 @@ export async function getBookings({ filter, sortBy, page }) {
     );
 
   if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
+
+  if (search) query = query.ilike("guests.fullName", `%${search}%`);
 
   if (sortBy)
     query = query.order(sortBy.field, {
@@ -117,6 +119,27 @@ export async function updateBooking(id, obj) {
     console.error(error);
     throw new Error("Booking could not be updated");
   }
+  return data;
+}
+
+export async function createEditBooking(newBooking, id) {
+  // newBooking: object with booking fields
+  let query = supabase.from("bookings");
+
+  if (!id) query = query.insert([{ ...newBooking }]);
+
+  if (id) query = query.update({ ...newBooking }).eq("id", id);
+
+  // return joined cabin and guest data so UI can use it immediately
+  const { data, error } = await query
+    .select("*, cabins(*), guests(*)")
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be created/updated");
+  }
+
   return data;
 }
 

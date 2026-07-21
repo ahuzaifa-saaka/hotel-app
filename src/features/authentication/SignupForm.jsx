@@ -27,6 +27,7 @@ function SignupForm() {
         <Input
           type="text"
           id="fullName"
+          placeholder="Enter full name"
           disabled={isLoading}
           {...register("fullName", { required: "Fullname is required" })}
         />
@@ -36,6 +37,7 @@ function SignupForm() {
         <Input
           type="email"
           id="email"
+          placeholder="Enter email address"
           disabled={isLoading}
           {...register("email", {
             required: "Email is required",
@@ -54,6 +56,7 @@ function SignupForm() {
         <Input
           type="password"
           id="password"
+          placeholder="Enter password"
           disabled={isLoading}
           {...register("password", { required: "Password is required" })}
         />
@@ -63,6 +66,7 @@ function SignupForm() {
         <Input
           type="password"
           id="passwordConfirm"
+          placeholder="Repeat password"
           disabled={isLoading}
           {...register("passwordConfirm", {
             required: "Password confirm is required",

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Logout from "../features/authentication/Logout";
 import HeaderMenu from "./HeaderMenu";
 import UserAvator from "../features/authentication/UserAvatar";
+// import { HiUserMinus } from "react-icons/hi2";
 
 const MobileToggle = styled.button`
   display: none;
@@ -31,7 +32,7 @@ function Header({ onToggle }) {
       <MobileToggle aria-label="Toggle sidebar" onClick={onToggle}>
         ☰
       </MobileToggle>
-
+      {/* <HiUserMinus /> */}
       <UserAvator />
       <HeaderMenu />
     </StyledHeader>

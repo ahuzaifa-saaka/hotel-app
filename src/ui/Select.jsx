@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 const StyledSelect = styled.select`
-  font-size: 1.4rem;
-  padding: 0.8rem 1.2rem;
+  width: 100%;
+  font-size: 1.3rem;
+  min-height: 4rem;
+  padding: 0 1rem;
   border: 1px solid
     ${(props) =>
       props.type === "white"
@@ -14,10 +16,15 @@ const StyledSelect = styled.select`
   box-shadow: var(--shadow-sm);
 `;
 
-function Select({options, value, onChange, ...props}) {
+function Select({ options, placeholder, value, onChange, ...props }) {
   return (
     <div>
       <StyledSelect value={value} onChange={onChange} {...props}>
+        {placeholder && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )}
         {options.map((option) => (
           <option value={option.value} key={option.value}>
             {option.label}

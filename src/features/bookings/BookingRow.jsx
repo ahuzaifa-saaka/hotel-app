@@ -17,6 +17,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import BookingForm from "./BookingForm";
 import { useDeleteBooking } from "./useDeleteBooking";
 
 const Cabin = styled.div`
@@ -121,6 +122,10 @@ function BookingRow({
               </Menus.Button>
             )}
 
+            <Modal.Open opens="edit">
+              <Menus.Button icon={<HiEye />}>Edit Booking</Menus.Button>
+            </Modal.Open>
+
             {Status === "checked-in" && (
               <Menus.Button
                 disabled={isCheckingOut}
@@ -144,6 +149,22 @@ function BookingRow({
             resourceName="booking"
             disabled={isDeleting}
             onConfirm={() => deleteBooking(bookingId)}
+          />
+        </Modal.Window>
+
+        <Modal.Window name="edit">
+          <BookingForm
+            bookingToEdit={{
+              id: bookingId,
+              startDate,
+              endDate,
+              numNight,
+              numGuest,
+              totalPrice,
+              Status,
+              guests,
+              cabins,
+            }}
           />
         </Modal.Window>
       </Modal>
